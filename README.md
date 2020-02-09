@@ -1,2 +1,2 @@
 # chfrank-cgn.github.io
-GitHub Pages
+Rancher Cloud Wiki

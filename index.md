@@ -12,6 +12,8 @@ Rancher is the number one open-source management
 
 Rancher is the number one open-source management
 
+[Home](https://chfrank.net/)
+
 [Contact](https://chfrank.net/index.html#contacts5-7)
 
 [Impressum](https://chfrank.net/page1.html)

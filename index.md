@@ -1,52 +1,18 @@
-Welcome...
+Cloud Wiki
 ==========
 
-### to our comfy Café "Fantasia".
+My collection of information
 
-We offer:
-
-* delicious breakfast to start your day
-	* family brunches on Sundays
-* reasonably priced lunch specials
-	* with daily changing menu
-	* "quick menu" including a soft beverage for only $5,90
-* romantic candlelight dinner
-
-Images
-------
-
-![Interior view](rancher-dashboard.png "Interoir view, Image courtesy of Eoghan OLionnain, licesend CC-BY-SA 2.0")
-![Exterior view](rancher-dashboard.png "Exterior view, Image courtesy of Beatrice Murch, licensed CC-BY 2.0")
-
-Location
---------
-
-> Hirschstr. 2a
-> 76133 Karlsruhe / Germany
-
-
-Opening hours
--------------
-
-Mo-Fr: 8AM-11PM
-Sa-Su: 9AM-11PM
-
-Attention: During summer holidays in the state of Baden-W&uuml;rttemberg we are closed!
-
-Get to us
+Rancher
 -------
 
-Coming from Autobahn A5, take the exit "Karlsruhe Zentrum", follow the road for about 2 miles and take the exit "ZKM". Turn right after the second traffic lights.
+Rancher is the number one open-source management
 
-Specials
---------
+![Interior view](rancher-dashboard.png "Rancher Dashboard")
 
-Please take a look at our [weekly lunch specials](specials.md).
+Rancher is the number one open-source management
 
-Reservations
---------------
+[Contact](https://chfrank.net/index.html#contacts5-7)
 
-Reservations can be done at ** +49(0)721-555-123567 **.
-
-Note: We do not take reservations for later than 8PM.
+[Impressum](https://chfrank.net/page1.html)
 

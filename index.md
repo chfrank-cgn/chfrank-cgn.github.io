@@ -27,8 +27,6 @@ All major cloud providers have their infrastructure scripting tools, but there's
 Site Information
 -----------------
 
-[Home Page](https://chfrank.net/)
-
-[Contact Information](https://chfrank.net/index.html#contacts5-7)
+[Home Page & Contact Information](https://chfrank.net/)
 
 [Impressum](https://chfrank.net/page1.html)

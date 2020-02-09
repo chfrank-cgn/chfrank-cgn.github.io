@@ -1,16 +1,19 @@
 Rancher Cloud Wiki
 ==================
 
-This Wiki contains a collection of blog posts related to Rancher, Terraform and the major public cloud providers.
+This Wiki contains a collection of blog posts related to Rancher, Terraform and all major public cloud providers.
 
 Rancher
 -------
 
 What is Rancher? According to the Rancher Labs website, it is "[...] a complete software stack for teams adopting containers. It addresses the operational and security challenges of managing multiple Kubernetes clusters, while providing DevOps teams with integrated tools for running containerized workloads".
 
+
 Rancher provides a management platform to centrally manage multiple Kubernetes clusters in Enterprise IT, all from a user-friendly GUI. Rancher also offers integration tools for application development and robust enterprise-grade features for security and governance. For operations, Rancher provides integrated solutions for logging, monitoring, and auditing, amongst other features.
 
+
 ![Interior view](rancher-dashboard.png "Rancher GUI - Dashboard")
+
 
 The central element of Rancher is the GUI provided by the Rancher server itself. It offers one-stop access for all administrative tasks necessary on Kubernetes clusters, from installation, upgrading, and decommissioning to hardening. The GUI allows all application administration, and also offers easy access to troubleshooting information. For developers, it provides user authentication and pipeline connection.
 

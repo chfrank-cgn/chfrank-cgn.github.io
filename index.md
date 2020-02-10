@@ -29,4 +29,8 @@ Site Information
 
 [Home Page & Contact Information](https://chfrank.net/)
 
+[License](https://creativecommons.org/licenses/by/4.0/)
+
+[Source Code](https://github.com/chfrank-cgn/chfrank-cgn.github.io)
+
 [Impressum](https://chfrank.net/page1.html)

@@ -1,5 +1,5 @@
-Rancher Cloud Wiki
-==================
+Cloud Wiki
+==========
 
 This Wiki contains a collection of articles related to Rancher, Terraform and major public cloud providers.
 

@@ -113,7 +113,7 @@ resource "google_compute_instance" "vm_gcp" {
 
 ## Data
 
-We need to pass the Rancher registration command into the startup script above, so we need a data template which allows us to substitute Terraform variable in local files:
+We need to pass the Rancher registration command into the startup script above, so we need a data template which allows us to substitute Terraform variables in local files:
 
 ```
 data "template_file" "startup-script_data" {
@@ -142,7 +142,7 @@ variable "numnodes" {
 
 ## Output
 
-And last, but not least, to facilitate ssh access, we show the external IP addresses upon successful completion:
+And last, but not least, to facilitate command line ssh access, we show the external IP addresses upon successful completion:
 
 ```
 output "Public" {  

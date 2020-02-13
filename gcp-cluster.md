@@ -1,12 +1,10 @@
-GCP Cluster
-==========
+# GCP Cluster
 
 Rancher 2.x does not include a node driver for GCP, just a cluster driver for GKE, which should be sufficient for most needs. However, to build a Rancher Kubernetes cluster on GCP, we can use Terraform and the custom cluster setup.
 
-Terraform directory setup
--------------------------
+## Terraform directory setup
 
-First step is to set up a new project (directory) for the GCP cluster:
+First step is to set up a new terraform plan (directory) for the GCP cluster:
 
 ```
 -rw-r--r-- 1 cfrank ewscom  341 Jan 21 06:10 data.tf
@@ -18,11 +16,20 @@ drwxr-xr-x 2 cfrank ewscom 4096 Jan 19 06:48 files
 -rw-r--r-- 1 cfrank ewscom  509 Feb  9 07:56 variables.tf
 ```
 
-In the following, we'll exame the individual files - you can find the complete sources on [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/gcp-cluster)
+In the following, we'll exame the individual files - you can find the complete sources on [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/gcp-cluster). Terraform is state-based, for state storage we'll use the Terraform cloud:
+
+```
+  backend "remote" {
+    organization = "xxxxxxxxxxx"
+    workspaces {
+      name = "compute-prod-us-central"
+    }
+  }
+```
 
 ## Provider
 
-To set up a custom cluster, we need define two providers - Google for the infrastructure:
+To set up a custom cluster, we need define two providers, first Google for the infrastructure:
 
 ```
 provider "google" {
@@ -33,13 +40,46 @@ provider "google" {
 }
 ```
 
-and Rancher for Kubernetes:
+and second Rancher for Kubernetes:
 
 ```
 provider "rancher2" {
   api_url = var.rancher-url
   token_key = var.rancher-token
   insecure = true
+}
+```
+
+## Resources
+
+The next definitions are for all the cluster resources.
+
+### Random ID
+
+To have a unique identifier for cluster and nodes, we use Random:
+
+```
+resource "random_id" "instance_id" {
+ byte_length = 3
+}
+```
+
+### Cluster
+
+We define the Rancher cluster, using the name from above and set Kubernetes networking and version:
+
+```
+resource "rancher2_cluster" "cluster_gcp" {
+  name         = "gcp-${random_id.instance_id.hex}"
+  description  = "Terraform"
+
+  rke_config {
+    kubernetes_version = var.k8version
+    ignore_docker_version = false
+    network {
+      plugin = "flannel"
+    }
+  }
 }
 ```
 
@@ -56,7 +96,7 @@ output "Public" {
 Result
 ------
 
-After a terraform apply, the resulting Kubernetes cluster should look like this:
+After terraform init / plan / apply, the resulting Kubernetes cluster will look like this and will be fully available in Rancher:
 
 ```
 NAME           STATUS   ROLES                      AGE   VERSION   INTERNAL-IP   OS-IMAGE
@@ -65,8 +105,8 @@ rke-1ebacc-1   Ready    controlplane,etcd,worker   43m   v1.15.9   10.240.0.78  
 rke-1ebacc-2   Ready    controlplane,etcd,worker   43m   v1.15.9   10.240.0.81   Ubuntu 18.04.3 LTS
 ```
 
+Happy Ranching!
+
+
+
 *(Last update: 2/13/20, cf)*
-
-
-
-

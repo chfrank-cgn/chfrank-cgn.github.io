@@ -6,7 +6,7 @@ For Terraform to do this, we need to complete a couple of steps.
 
 ## Terraform directory setup
 
-First step is to set up a new terraform environment (i.e. a directory) for the GCP cluster, in which we create the plan files (i.e. the desired state):
+First step is to set up a new terraform environment (i.e. a directory) for the GCP cluster, in which we create the plan files (i.e. the desired state definitions):
 
 ```
 -rw-r--r-- 1 cfrank ewscom  341 Jan 21 06:10 data.tf
@@ -33,9 +33,11 @@ terraform {
 }
 ```
 
+The Terraform cloud not only allows remote storage of plan states, but also offers integration into major source code revision tools, allwoing you to trigger plan execution with a simple commit.
+
 ## Provider
 
-To set up a custom Rancher cluster on GCE, we need to define two providers, a [Google Cloud Platform provider](https://www.terraform.io/docs/providers/google/index.html) for the infrastructure:
+To set up a custom Rancher cluster on GCE, we need to create two providers, a [Google Cloud Platform provider](https://www.terraform.io/docs/providers/google/index.html) for the infrastructure:
 
 ```
 provider "google" {
@@ -58,7 +60,7 @@ provider "rancher2" {
 
 ## Main
 
-The next plan definitions are for the main cluster resources - the cluster itself, its name and its instances.
+The next plan definitions are for the actual cluster resources - the cluster itself, its name and its instances.
 
 ### Random ID
 
@@ -91,7 +93,7 @@ resource "rancher2_cluster" "cluster_gcp" {
 
 ### Instances
 
-For the cluster, we need a number of compute instances; Terraform 0.12 brought a number of new control elements, one of which is an easy way to define multiple resources of the same type (count):
+For the cluster, we need a number of compute instances; Terraform 0.12 brought new control elements, one of which is an easy way to define multiple resources of the same type (count):
 
 ```
 resource "google_compute_instance" "vm_gcp" {
@@ -123,6 +125,8 @@ data "template_file" "startup-script_data" {
 }
 ```
 
+The registration command will only be available after successful creation of the cluster in Rancher, hence the dependency.
+
 ## Variables
 
 Certain values, such as the Kubernetes version to use or the number of nodes, are defined as variables, to make overall code maintenance easier:
@@ -132,7 +136,7 @@ variable "k8version" {
   default = "v1.15.9-rancher1-1"
 }
 variable "numnodes" {
-	default = 3
+    default = 3
 }
 ```
 
@@ -161,5 +165,3 @@ rke-1ebacc-2   Ready    controlplane,etcd,worker   43m   v1.15.9   10.240.0.81  
 Happy Ranching!
 
 *(Last update: 2/13/20, cf)*
-
-

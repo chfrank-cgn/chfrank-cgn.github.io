@@ -153,7 +153,7 @@ output "Public" {
 Result
 ------
 
-After terraform init / plan / apply, the resulting Kubernetes cluster will then look like this and will be fully provisioned in Rancher:
+After terraform init / plan / apply, the resulting Kubernetes cluster will be fully provisioned in Rancher and look like this in kubectl:
 
 ```
 NAME           STATUS   ROLES                      AGE   VERSION   INTERNAL-IP   OS-IMAGE

@@ -2,7 +2,7 @@
 
 [Terraform]()
 
-  * [GCP CLuster](gcp-cluster.md)
+  * [GCP Cluster](gcp-cluster.md)
 
 [gimmick:theme](flatly)
 

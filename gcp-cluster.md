@@ -21,7 +21,7 @@ drwxr-xr-x 2 cfrank ewscom 4096 Jan 19 06:48 files
 -rw-r--r-- 1 cfrank ewscom  509 Feb  9 07:56 variables.tf
 ```
 
-In the following, we'll exame the individual files - you can find the source on [GitHub]([https://github.com/chfrank-cgn/Rancher/tree/master/gcp-cluster](https://github.com/chfrank-cgn/Rancher/tree/master/gcp-cluster)
+In the following, we'll exame the individual files - you can find the source on [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/gcp-cluster)
 
 
 

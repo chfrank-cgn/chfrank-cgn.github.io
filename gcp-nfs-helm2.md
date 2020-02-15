@@ -65,7 +65,7 @@ resource "kubernetes_cluster_role_binding" "tiller_clusterrolebinding" {
 }
 ```
 
-### Helm
+## Helm
 
 Once we've created the service account, Helm can install the NFS client provisioner:
 
@@ -88,8 +88,6 @@ resource "helm_release" "nfs_client" {
 ```
 
 There's no need for a separate "helm init" step - the Helm provider will take care of initialization if it hasn't been done already.
-
-
 
 Happy NFSing!
 

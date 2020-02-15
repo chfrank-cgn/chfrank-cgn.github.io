@@ -2,7 +2,7 @@
 
 In this article, we're looking at setting up the NFS Client Provisioner on a Kubernetes cluster using Helm v2. 
 
-Although Kubernetes mainly targets cloud-native stateless applications, there might a need for persistent storage for particular applications. If you're looking for shared storage, in Kubernetes parlance "RWX" or "ReadWriteMany", NFS is a very good choice - the protocol is robust, and there are many rock-solid implementations around. Furthermore, there are many well established provider-side backup and recovery solutions available; many of the new cloud-native storage providers only allow for application-side backup and recovery, which does not have me fully convinced.
+Although Kubernetes mainly targets cloud-native stateless applications, there might a need for persistent storage for particular applications. If you're looking for shared volumes, in Kubernetes parlance "RWX" or "ReadWriteMany" access, NFS is a very good choice - the protocol is robust, and there are many rock-solid implementations around. Furthermore, there are many well established provider-side backup and recovery solutions available; many cloud-native storage providers only allow for application-side backup and recovery, which does not have me fully convinced.
 
 Down below, we'll look at all the individual steps - this Terraform plan has been successfully executed multiple times, and you can find the complete source code on [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/gcp-nfs-helm2).
 
@@ -28,7 +28,7 @@ provider "helm" {
 }
 ```
 
-Both providers will use the kube config file for access.
+Both providers will use a kube config file for access.
 
 ## Main
 
@@ -85,19 +85,10 @@ resource "helm_release" "nfs_client" {
 
   depends_on = [kubernetes_cluster_role_binding.tiller_clusterrolebinding]
 }
-
 ```
 
-Note: There's no need for a separate "helm init" step - the Helm provider will take care of the initialization if it hasn't been done already.
-
-
+There's no need for a separate "helm init" step - the Helm provider will take care of initialization if it hasn't been done already.
 
 Happy NFSing!
 
-
-
 *(Last update: 2/15/20, cf)*
-
-
-
-

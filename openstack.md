@@ -51,19 +51,15 @@ To create a Kubernetes cluster on OpenStack with the built-in node driver, the d
 ```
 "authUrl": "https://api.openstack.net:5000/v3",
 "availabilityZone": "Zone1",
-
 "domainName": "Default",
 "flavorName": "standard.2.1905",
 "floatingipPool": "extern",
-
 "imageName": "ubuntu-18.04-bionic-amd64",
 "keypairName": "rancher",
 "netName": "intern",
 "sshPort": "22",
 "sshUser": "ubuntu",
-
 "tenantId": "616a8b01b5f94f99acd00a844f8f46c3",
-
 "username": "user"
 ```
 
@@ -79,7 +75,7 @@ To enable automatic cluster setup, the following [firewall rules](https://ranche
 
 ## Custom Cluster
 
-Alternatively, the cluster can be built from individually created instances and a startup script:
+Alternatively, the cluster can be built from individually created instances and the help of a startup script, to install and enable docker:
 
 ```
 #!/bin/sh
@@ -102,7 +98,7 @@ To enable cluster creation from existing nodes, the following firewall rules nee
 
 ## Cinder
 
-For access to Cinder block storage, define the following storage class:
+For access to Cinder block storage, apply the following storage class definition:
 
 ```
 apiVersion: storage.k8s.io/v1
@@ -120,5 +116,3 @@ No further action is needed for the OpenStack load balancer.
 Happy Stacking!
 
 *(Last update: 2/22/20, cf)*
-
-

@@ -1,6 +1,6 @@
 # OpenStack
 
-[OpenStack](https://www.openstack.org/) is still a viable cloud operating system and in use by many ISPs. The setup in this article was performed on a teutoStack public cloud environment, operated by [teuto.net](https://teuto.net/) in [Bielefeld](https://en.wikipedia.org/wiki/Bielefeld_Conspiracy).
+[OpenStack](https://www.openstack.org/) is still a viable cloud operating system and in use by many ISPs. The setup in this article was performed on a teutoStack public cloud environment in [Bielefeld](https://en.wikipedia.org/wiki/Bielefeld_Conspiracy), operated by [teuto.net](https://teuto.net/).
 
 OpenStack integration for Kubernetes itself has been around for some time and consists of two components: The OpenStack [cloud provider](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/options/cloud-providers/) and the OpenStack [node driver](https://rancher.com/docs/rancher/v2.x/en/admin-settings/drivers/node-drivers/). The cloud provider is available in Rancher by default; Rancher also includes a node driver. However, that's not enabled by default. 
 
@@ -10,7 +10,7 @@ For easier access, all example files below are available on [GitHub](https://git
 
 ## Cloud Provider
 
-To enable the OpenStack cloud provider, choose the "Custom" option during cluster creation for the cloud provider in the Rancher GUI and then add the following information into the cluster configuration (Edit YAML) as an example - substitute actual values as needed:
+To enable the OpenStack cloud provider, choose the "Custom" option during cluster creation for the cloud provider in the Rancher GUI and then add the following information into the cluster configuration (through Edit YAML) as an example - substitute actual values as needed:
 
 ```
 rancher_kubernetes_engine_config:
@@ -46,7 +46,7 @@ With this information, Kubernetes gets access to the OpenStack API, to create an
 
 ## Node Driver
 
-To create a Kubernetes cluster on OpenStack with the built-in node driver, the driver needs to be enabled in Rancher's node driver configuration page, and then the following information entered in a node template, again with example values - substitute actual values as needed:
+To create a Kubernetes cluster on OpenStack with the built-in node driver, the driver needs to be enabled in Rancher's node driver configuration page, and then the following information entered in a node template - substitute actual values as needed:
 
 ```
 "authUrl": "https://api.openstack.net:5000/v3",
@@ -63,7 +63,7 @@ To create a Kubernetes cluster on OpenStack with the built-in node driver, the d
 "username": "user"
 ```
 
-Afterward, cluster creation is straightforward, as with all other cloud providers
+Afterward, cluster creation is straightforward, as with all other cloud providers.
 
 ### Security Groups
 
@@ -75,7 +75,7 @@ To enable automatic cluster setup, the following [firewall rules](https://ranche
 
 ## Custom Cluster
 
-Alternatively, the cluster can be built from individually created instances and the help of a startup script, to install and enable docker:
+Alternatively, the cluster can be built from individually created instances and the help of a startup script, to install and enable docker ([Ubuntu18.04 LTS](https://ubuntu.com/download/server)):
 
 ```
 #!/bin/sh

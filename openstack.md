@@ -1,16 +1,18 @@
 # OpenStack
 
-[OpenStack](https://www.openstack.org/) is still a viable cloud operating system and in use by many ISPs. The setup in this article was performed on a teutoStack public cloud environment in [Bielefeld](https://en.wikipedia.org/wiki/Bielefeld_Conspiracy), operated by [teuto.net](https://teuto.net/).
+[OpenStack](https://www.openstack.org/) is still a viable cloud operating system and in use by many ISPs all over the world. Installations might differ slightly, the setup in this article was performed on a teutoStack public cloud environment in [Bielefeld](https://en.wikipedia.org/wiki/Bielefeld_Conspiracy), operated by [teuto.net](https://teuto.net/).
 
-OpenStack integration for Kubernetes itself has been around for some time and consists of two components: The OpenStack [cloud provider](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/options/cloud-providers/) and the OpenStack [node driver](https://rancher.com/docs/rancher/v2.x/en/admin-settings/drivers/node-drivers/). The cloud provider is available in Rancher by default; Rancher also includes a node driver. However, that's not enabled by default. 
+OpenStack integration for Kubernetes itself has been around for some time and is well established. It consists of two components: The OpenStack [cloud provider](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/options/cloud-providers/) and the OpenStack [node driver](https://rancher.com/docs/rancher/v2.x/en/admin-settings/drivers/node-drivers/). The cloud provider is available in Rancher by default; Rancher also includes a node driver. However, that's not enabled by default. 
 
-To build a Rancher Kubernetes cluster on OpenStack, there are two options: The OpenStack node driver or a [custom cluster](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/custom-nodes/) setup.
+There are two options to build a Rancher Kubernetes cluster on OpenStack: The OpenStack node driver or a [custom cluster](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/custom-nodes/) setup.
 
 For easier access, all example files below are available on [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/openstack).
 
 ## Cloud Provider
 
-To enable the OpenStack cloud provider, choose the "Custom" option during cluster creation for the cloud provider in the Rancher GUI and then add the following information into the cluster configuration (through Edit YAML) as an example - substitute actual values as needed:
+To allow Kubernetes access to the OpenStack API, to create load balancers or volumes, for example, enable the OpenStack cloud provider.
+
+To do so, choose the "Custom" option during cluster creation for the cloud provider in the Rancher GUI and then insert the following information into the cluster configuration (through "Edit YAML") - substitute actual values as required:
 
 ```
 rancher_kubernetes_engine_config:
@@ -42,11 +44,11 @@ rancher_kubernetes_engine_config:
   ...
 ```
 
-With this information, Kubernetes gets access to the OpenStack API, to create and delete resources, and also access to Cinder volumes and the Octavia load balancer. Without this configuration, the cluster would still work fine, just without any access to Cinder or Octavia.
+With this information, Kubernetes will get access to the OpenStack API, to create and delete resources, and access to Cinder volumes and the Octavia load balancer. Without this configuration, the Kubernetes cluster would still work fine, just without any access to Cinder or Octavia, or any other OpenStack resources.
 
 ## Node Driver
 
-To create a Kubernetes cluster on OpenStack with the built-in node driver, the driver needs to be enabled in Rancher's node driver configuration page, and then the following information entered in a node template - substitute actual values as needed:
+The node driver needs to be enabled in the Rancher configuration to create a Kubernetes cluster on OpenStack with the built-in node driver. Then a node template needs to be created with the following information - substitute actual values as needed:
 
 ```
 "authUrl": "https://api.openstack.net:5000/v3",
@@ -67,7 +69,7 @@ Afterward, cluster creation is straightforward, as with all other cloud provider
 
 ### Security Groups
 
-To enable automatic cluster setup, the following [firewall rules](https://rancher.com/docs/rancher/v2.x/en/installation/requirements/ports/) need to be defined between Rancher and the OpenStack tenant:
+The following [firewall rules](https://rancher.com/docs/rancher/v2.x/en/installation/requirements/ports/) need to be defined between Rancher and the OpenStack tenant to enable automatic cluster setup:
 
 - ssh, http and https in both directons
 - 2376 (docker) from Rancher to the tenant nodes
@@ -75,7 +77,7 @@ To enable automatic cluster setup, the following [firewall rules](https://ranche
 
 ## Custom Cluster
 
-Alternatively, the cluster can be built from individually created instances and the help of a startup script, to install and enable docker ([Ubuntu18.04 LTS](https://ubuntu.com/download/server)):
+Alternatively, the cluster can be built from individually created instances, with the help of a startup script to install and enable docker ([Ubuntu18.04 LTS](https://ubuntu.com/download/server)):
 
 ```
 #!/bin/sh
@@ -91,7 +93,7 @@ exit 0
 
 ### Security Groups
 
-To enable cluster creation from existing nodes, the following firewall rules need to be defined for the OpenStack tenant:
+The following firewall rules need to be defined for the OpenStack tenant to enable cluster creation from existing nodes::
 
 - ssh from a workstation
 - http and https to Rancher
@@ -113,6 +115,10 @@ parameters:
 
 No further action is needed for the OpenStack load balancer.
 
+## Troubleshooting
+
+There will be a certain amount of trial and error during the initial setup. A good source for debugging information comes from Rancher itself, in the form of its log to stdout - having a tail on this output will help a lot, especially during node creation.
+
 Happy Stacking!
 
-*(Last update: 2/22/20, cf)*
+*(Last update: 2/23/20, cf)*

@@ -4,9 +4,9 @@
 
 OpenStack integration for Kubernetes itself has been around for some time and is well established. It consists of two components: The OpenStack [cloud provider](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/options/cloud-providers/) and the OpenStack [node driver](https://rancher.com/docs/rancher/v2.x/en/admin-settings/drivers/node-drivers/). The cloud provider is available in Rancher by default; Rancher also includes a node driver. However, that's not enabled by default. 
 
-There are two options to build a Rancher Kubernetes cluster on OpenStack: The OpenStack node driver or a [custom cluster](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/custom-nodes/) setup.
+There are two options to build a Rancher Kubernetes cluster on OpenStack: With the OpenStack node driver or through a [custom cluster](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/custom-nodes/) setup.
 
-For easier access, all example files below are available on [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/openstack).
+For easier access, all configuration examples below are available on [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/openstack).
 
 ## Cloud Provider
 
@@ -46,7 +46,7 @@ rancher_kubernetes_engine_config:
 
 With this information, Kubernetes will get access to the OpenStack API, to create and delete resources, and access to Cinder volumes and the Octavia load balancer. Without this configuration, the Kubernetes cluster would still work fine, just without any access to Cinder or Octavia, or any other OpenStack resources.
 
-## Node Driver
+## Option 1: Node Driver
 
 The node driver needs to be enabled in the Rancher configuration to create a Kubernetes cluster on OpenStack with the built-in node driver. Then a node template needs to be created with the following information - substitute actual values as needed:
 
@@ -75,9 +75,9 @@ The following [firewall rules](https://rancher.com/docs/rancher/v2.x/en/installa
 - 2376 (docker) from Rancher to the tenant nodes
 - 2376, 2379, 2380, 6443, and 10250 between the tenant nodes
 
-## Custom Cluster
+## Option 2: Custom Cluster
 
-Alternatively, the cluster can be built from individually created instances, with the help of a startup script to install and enable docker ([Ubuntu18.04 LTS](https://ubuntu.com/download/server)):
+Alternatively, the cluster can be built from individually created instances, with the help of a startup script to install and enable docker (on [Ubuntu18.04 LTS](https://ubuntu.com/download/server)):
 
 ```
 #!/bin/sh
@@ -93,7 +93,7 @@ exit 0
 
 ### Security Groups
 
-The following firewall rules need to be defined for the OpenStack tenant to enable cluster creation from existing nodes::
+The following firewall rules need to be defined for the OpenStack tenant to enable cluster creation from existing nodes:
 
 - ssh from a workstation
 - http and https to Rancher
@@ -113,12 +113,14 @@ parameters:
   availability: nova
 ```
 
-No further action is needed for the OpenStack load balancer.
+No further action is needed to enable the OpenStack load balancer.
 
 ## Troubleshooting
 
-There will be a certain amount of trial and error during the initial setup. A good source for debugging information comes from Rancher itself, in the form of its log to stdout - having a tail on this output will help a lot, especially during node creation.
+There will be a certain amount of trial and error during the initial setup. A good source of debugging information comes from Rancher itself, in the form of its log to stdout - following a tail on this will help a lot, especially during node creation.
 
 Happy Stacking!
 
 *(Last update: 2/23/20, cf)*
+
+

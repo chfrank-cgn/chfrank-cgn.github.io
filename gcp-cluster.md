@@ -1,6 +1,6 @@
 # GCP Cluster
 
-Rancher 2.x does not include a node driver for GCP, just a cluster driver for GKE, which should be more than sufficient for most needs. However, to build a Rancher Kubernetes cluster on GCP, we can use [Terraform](https://www.terraform.io/) and the [custom cluster](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/custom-nodes/) setup.
+Rancher 2.x does not include a node driver for GCP, just a cluster driver for GKE, which should be more than sufficient for most needs. However, to build a Rancher Kubernetes cluster on GCP, we can use [Terraform](https://www.terraform.io/) and a [custom node](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/custom-nodes/) setup.
 
 For Terraform to do this, we need to complete a couple of steps.
 
@@ -164,4 +164,4 @@ rke-1ebacc-2   Ready    controlplane,etcd,worker   43m   v1.15.9   10.240.0.81  
 
 Happy Ranching!
 
-*(Last update: 2/13/20, cf)*
+*(Last update: 2/23/20, cf)*

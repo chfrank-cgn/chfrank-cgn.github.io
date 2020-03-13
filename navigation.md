@@ -8,6 +8,7 @@
 [Custom]()
 
   * [OpenStack](openstack.md)
+  * [oVirt](ovirt-cp.md)
 
 [gimmick:theme](flatly)
 

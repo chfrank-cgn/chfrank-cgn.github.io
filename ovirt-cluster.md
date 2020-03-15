@@ -68,7 +68,7 @@ resource "rancher2_cluster" "cluster_tf" {
 
 For our cluster, we need several compute instances - in this case, we configure three nodes for the control plane and three more nodes as workers; for brevity, we only show the control node definitions.
 
-We were not using DHCP on this platform, so we're going to define node names and IP addresses in static Terrform lists, indexed by count:
+We were not using DHCP on this platform, so we're going to define node names and IP addresses in static Terraform lists, indexed by count:
 
 ```
 variable "vm_control" {
@@ -81,7 +81,7 @@ variable "vm_nic_ip_address_control" {
 }
 ```
 
-The individual instances are based on oVirt templates, which already include all platform specific settings and have docker installed:
+The individual instances are based on oVirt templates, which include all platform specific settings and have docker installed already:
 
 ```
 resource "ovirt_vm" "control" {
@@ -127,7 +127,7 @@ data "template_file" "startup-script_control" {
 }
 ```
 
-The registration command will only be available after the successful creation of the cluster in Rancher, hence the dependency. The startup script itself is in YAML format and contains only one line; everything else has been defined in the oVirt template already:
+The registration command will only be available after the successful creation of the cluster in Rancher, hence the dependency. The startup script itself is in YAML format and contains only one line; everything else has been defined in the oVirt template:
 
 ```
 runcmd:
@@ -140,4 +140,6 @@ After terraform init / plan / apply, the resulting Kubernetes cluster will be fu
 
 Happy Ranching!
 
-*(Last update: 3/14/20, cf)*
+*(Last update: 3/15/20, cf)*
+
+

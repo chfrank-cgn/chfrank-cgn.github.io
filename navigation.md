@@ -7,7 +7,7 @@
   * [GCP NFS Storage Class](gcp-nfs-helm2.md)
   * [oVirt Cluster](ovirt-cluster.md)
 
-[Custom]()
+[Manual]()
 
   * [OpenStack](openstack.md)
   * [oVirt](ovirt-cp.md)

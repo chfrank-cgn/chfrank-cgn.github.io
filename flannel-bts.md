@@ -78,7 +78,7 @@ default via 10.240.0.1 dev ens4 proto dhcp src 10.240.0.103 metric 100
 172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 linkdown
 ```
 
-Every pod on the cluster gets an IP address from the cluster network sub-net corresponding to the node it runs on. Network traffic between pods is sent either via the local cni0 interface, if the traffic target is a pod on the same node, or encapsulated via flannel.1, if the traffic target is a pod that resides on a different node.
+Every pod on the cluster gets an IP address from the cluster network subnet corresponding to the node it runs on. Network traffic between pods is sent either via the local cni0 interface, if the traffic target is a pod on the same node, or encapsulated via flannel.1, in case the traffic target is a pod that resides on a different node.
 
 ## Pod interfaces
 

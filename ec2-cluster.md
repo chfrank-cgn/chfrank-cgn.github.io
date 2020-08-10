@@ -18,7 +18,7 @@ provider "rancher2" {
 
 ## Main
 
-Let's continue with the plan the plan definitions for the actual cluster resources - the cluster itself, its name, and its node pools.
+Let's continue with the plan definitions for the actual cluster resources - the cluster itself, its name, and its node pools.
 
 ### Random ID
 
@@ -74,7 +74,7 @@ I define most values, such as the Kubernetes version to use, the Amazon Machine 
 variable "k8version" {
   default = "v1.15.12-rancher2-3"
 }
-variable "image" { 
+variable "image" {
     default = "ami-024e928dca73bfe66"
 }
 variable "numnodes" {

@@ -4,6 +4,8 @@ Even on AWS EC2, it can make a lot of sense to create an unmanaged Kubernetes cl
 
 [Rancher](https://rancher.com/) offers node and cluster drivers for Amazon EC2, and in this article, we'll be using the Rancher node driver through [Terraform](https://www.terraform.io/) to create the cluster and set up a [node pool](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/) for it. For more details on Rancher's options for cluster creation, look at this  [post](https://rancher.com/blog/2020/build-kubernetes-clusters-on-azure) on the Rancher [blog](https://rancher.com/blog/) or the Rancher [documentation](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/).
 
+For details on how to enable the AWS Cloud Provider and tag your resources, have a look at the [provider](https://rancher.com/docs/rke/latest/en/config-options/cloud-providers/aws/) documentation.
+
 ## Provider
 
 I'm assuming that you have set up Terraform already. As a first step, we need to define the [Rancher2 provider](https://www.terraform.io/docs/providers/rancher2/index.html):
@@ -46,7 +48,7 @@ resource "rancher2_cloud_credential" "credential_ec2" {
 
 ### Node template
 
-With the credentials above, we set one or more node templates:
+With the credentials from above, we set one or more node templates:
 
 ```
 resource "rancher2_node_template" "template_ec2" {
@@ -62,6 +64,8 @@ resource "rancher2_node_template" "template_ec2" {
     zone = var.ec2-zone
     root_size = var.disksize
     instance_type = var.type
+    iam_instance_profile = "rancher-combined-control-worker"
+    tags = "kubernetes.io/cluster/rancher,owned"
   }
 }
 ```
@@ -94,6 +98,9 @@ resource "rancher2_cluster" "cluster_ec2" {
 
   rke_config {
     kubernetes_version = var.k8version
+    cloud_provider {
+      name = "aws"
+    }
     ignore_docker_version = false
     network {
       plugin = "flannel"
@@ -121,39 +128,50 @@ resource "rancher2_node_pool" "nodepool_ec2" {
 
 ### Cluster sync
 
-We're almost ready, just let's wait for the cluster to become active:
+We're almost ready, just let's wait for the cluster to become active, using a timer:
 
 ```
-resource "rancher2_cluster_sync" "sync_ec2" {
-  cluster_id =  rancher2_cluster.cluster_ec2.id
-  node_pool_ids = [rancher2_node_pool.nodepool_ec2.id]
+resource "null_resource" "before" {
+  depends_on = [rancher2_cluster.cluster_ec2,rancher2_node_pool.nodepool_ec2]
 }
-```
 
-Hat tip to Anders Nyvang of Coop, who pointed me to the cluster sync resource - much better than my previous local-exec hack!
+resource "null_resource" "delay" {
+  provisioner "local-exec" {
+    command = "sleep ${var.delaysec}"
+  }
 
-### Syslog
-
-As the final step, we enable Rancher's built-in logging:
-
-```
-resource "rancher2_cluster_logging" "ec2_syslog" {
-  name = "ec2_syslog"
-  cluster_id = rancher2_cluster_sync.sync_ec2.id
-  kind = "syslog"
-  syslog_config {
-    endpoint = "your.syslog.host:514"
-    protocol = "udp"
-    program = "ec2-${random_id.instance_id.hex}"
-    severity = "notice"
-    ssl_verify = false
+  triggers = {
+    "before" = "null_resource.before.id"
   }
 }
 ```
 
+### Syslog
+
+As the final step, we enable Rancher's logging app from the new marketplace:
+
+```
+resource "rancher2_app_v2" "syslog_ec2" {
+  lifecycle {
+    ignore_changes = all
+  }
+  cluster_id = rancher2_cluster.cluster_ec2.id
+  name = "rancher-logging"
+  namespace = "cattle-logging-system"
+  repo_name = "rancher-charts"
+  chart_name = "rancher-logging"
+  chart_version = var.logchart
+
+  depends_on = [rancher2_app_v2.syslog_crd_ec2,rancher2_cluster.cluster_ec2,rancher2_node_pool.nodepool_ec2]
+}
+```
+
+For the new v2 app resources, it can be beneficial to add dependencies, to make sure that the cluster is still accessible while the app resources is being destroyed.
+
 ## Validation
 
-To validate a successful build, I usually enable Rancher's built-in monitoring and quickly deploy the "Hello World" of Kubernetes, a WordPress instance, from the Rancher catalog.
+To validate a successful build, I usually enable Rancher's built-in monitoring as well and quickly deploy the "Hello World" of Kubernetes, a WordPress instance, from the Rancher catalog.
+
 Never run a Kubernetes cluster without monitoring or logging!
 
 ## Troubleshooting
@@ -164,4 +182,4 @@ You can find sample plan files for this Rancher node driver installation on my [
 
 Happy Ranching!
 
-*(Last update: 8/8/20, cf)*
+*(Last update: 1/5/21, cf)*

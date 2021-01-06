@@ -4,9 +4,13 @@ Even on AWS EC2, it can make a lot of sense to create an unmanaged Kubernetes cl
 
 [Rancher](https://rancher.com/) offers node and cluster drivers for Amazon EC2, and in this article, we'll be using the Rancher node driver through [Terraform](https://www.terraform.io/) to create the cluster and set up a [node pool](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/rke-clusters/node-pools/) for it. For more details on Rancher's options for cluster creation, look at this  [post](https://rancher.com/blog/2020/build-kubernetes-clusters-on-azure) on the Rancher [blog](https://rancher.com/blog/) or the Rancher [documentation](https://rancher.com/docs/rancher/v2.x/en/cluster-provisioning/).
 
-For details on how to enable the AWS Cloud Provider and tag your resources, have a look at the [provider](https://rancher.com/docs/rke/latest/en/config-options/cloud-providers/aws/) documentation.
+## Cloud Provider
 
-## Provider
+Unlike other cloud providers, the in-tree AWS provider does not use a separate set of credientials, but relies on IAM instance profiles assigned to the nodes; for details on the IAM policies, have a look at Rancher's [provider documentation](https://rancher.com/docs/rke/latest/en/config-options/cloud-providers/aws/).
+
+All resources that should be accessible to the cloud provider need to be tagged with a unique tag in the form of "kubernetes.io/cluster/\<cluster-id\>". In the example below I opted for a fixed value of "rancher" as I manage some resources (VPCs and subnets) outside of Terraform.
+
+## Terraform Provider
 
 I'm assuming that you have set up Terraform already. As a first step, we need to define the [Rancher2 provider](https://www.terraform.io/docs/providers/rancher2/index.html):
 
@@ -18,7 +22,7 @@ provider "rancher2" {
 }
 ```
 
-## Main
+## Terraform Main
 
 Let's continue with the plan definitions for the actual cluster resources - the cluster itself, its name, and its node pools.
 
@@ -70,6 +74,8 @@ resource "rancher2_node_template" "template_ec2" {
 }
 ```
 
+Note: Here's where you set the IAM policy and define the resource tag
+
 ### Variables
 
 I define most values, such as the Kubernetes version to use, the Amazon Machine Image or the number of nodes, as variables, to make overall plan maintenance easier:
@@ -100,6 +106,11 @@ resource "rancher2_cluster" "cluster_ec2" {
     kubernetes_version = var.k8version
     cloud_provider {
       name = "aws"
+      aws_cloud_provider {
+        global {
+          kubernetes_cluster_tag = "rancher"
+        }
+      }
     }
     ignore_docker_version = false
     network {
@@ -108,6 +119,8 @@ resource "rancher2_cluster" "cluster_ec2" {
   }
 }
 ```
+
+Note: Again, here we are defining the resource tag - there is no correct value, it just needs to be consistent across all areas.
 
 ### Node pool
 
@@ -166,20 +179,44 @@ resource "rancher2_app_v2" "syslog_ec2" {
 }
 ```
 
-For the new v2 app resources, it can be beneficial to add dependencies, to make sure that the cluster is still accessible while the app resources is being destroyed.
+For the new v2 app resources, it can be beneficial to add a dependency to the control plane, to make sure that the cluster is still accessible while the app resources are being destroyed.
 
 ## Validation
 
-To validate a successful build, I usually enable Rancher's built-in monitoring as well and quickly deploy the "Hello World" of Kubernetes, a WordPress instance, from the Rancher catalog.
+To validate a successful build, I usually enable Rancher's monitoring app and deploy the "Hello World" of Kubernetes, a WordPress instance, from the Rancher catalog.
 
 Never run a Kubernetes cluster without monitoring or logging!
+
+## Load Balancer
+
+If you've set up the IAM permissions correctly and tagged all resources, including VPC, creation of a ELB from Helm should work right away.
+
+## Storage Class
+
+To use Amazon EBS as storage, you'll need to define a storage class:
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+provisioner: kubernetes.io/aws-ebs
+reclaimPolicy: Delete
+parameters:
+  type: gp2
+volumeBindingMode: WaitForFirstConsumer
+```
+
+The option WaitForConsumer will help with zonal assignment
 
 ## Troubleshooting
 
 The best place for troubleshooting during plan execution is the output of the pod running Rancher - it provides detailed information on what Rancher is currently doing, and complete error messages if something goes wrong.
 
-You can find sample plan files for this Rancher node driver installation on my [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/ec2-cluster-1).
+You can find my sample plan files for this Rancher node driver installation and a sample IAM policy on my [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/ec2-cluster-1).
 
 Happy Ranching!
 
-*(Last update: 1/5/21, cf)*
+*(Last update: 1/6/21, cf)*

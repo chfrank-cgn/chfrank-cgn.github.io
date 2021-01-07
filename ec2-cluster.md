@@ -175,7 +175,7 @@ resource "rancher2_app_v2" "syslog_ec2" {
   chart_name = "rancher-logging"
   chart_version = var.logchart
 
-  depends_on = [rancher2_app_v2.syslog_crd_ec2,rancher2_cluster.cluster_ec2,rancher2_node_pool.nodepool_ec2]
+  depends_on = [rancher2_node_pool.nodepool_ec2]
 }
 ```
 
@@ -219,4 +219,4 @@ You can find sample plan files for this Rancher node driver installation and a s
 
 Happy Ranching!
 
-*(Last update: 1/6/21, cf)*
+*(Last update: 1/7/21, cf)*

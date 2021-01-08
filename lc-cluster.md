@@ -47,7 +47,7 @@ I define most values, such as the Kubernetes version to use, or the number of no
 
 ```
 variable "k8version" {
-  default = "v1.15.9-rancher1-1"
+  default = "v1.18.12-rancher1-1"
 }
 variable "numnodes" {
     default = 3

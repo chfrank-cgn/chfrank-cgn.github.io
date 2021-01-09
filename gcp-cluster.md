@@ -4,7 +4,7 @@ Rancher 2.x does not include a node driver for GCP, just a cluster driver for GK
 
 For Terraform to do this, we need to complete a couple of steps.
 
-## Terraform directory setup
+## Terraform setup
 
 The first step is to set up a new terraform environment (i.e., a directory) for the GCP cluster, in which we create the plan files (i.e., the desired state definitions):
 
@@ -21,7 +21,7 @@ drwxr-xr-x 2 cfrank ewscom 4096 Dec  9 09:03 files
 
 The file naming follows the convention proposed by HashiCorp, but you're free to use your naming scheme, all files with a  .tf ending will be examined. As we go along, we'll look at all the individual files - this Terraform plan has successfully been executed multiple times, and you can find the complete source code on [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/gcp-cluster).
 
-Terraform is a state-based infrastructure orchestration tool; for storage of the actual plan state, we'll use the [Terraform cloud](https://www.hashicorp.com/blog/announcing-terraform-cloud/):
+Terraform is a state-based infrastructure orchestration tool; for storage of the actual plan state, we'll use the [Terraform cloud](https://www.terraform.io/cloud):
 
 ```
 terraform {
@@ -38,7 +38,7 @@ The Terraform cloud allows remote storage of plan states and offers integration 
 
 ## Provider
 
-To set up a custom Rancher cluster on GCE, we need to create two providers, a [Google Cloud Platform provider](https://www.terraform.io/docs/providers/google/index.html) for the infrastructure:
+To set up a custom Rancher cluster on GCE, we need to create two providers, a [Google Cloud Platform provider](https://registry.terraform.io/providers/hashicorp/google/latest/docs) for the infrastructure:
 
 ```
 provider "google" {
@@ -49,7 +49,7 @@ provider "google" {
 }
 ```
 
-and a [Rancher2 provider](https://www.terraform.io/docs/providers/rancher2/index.html) for Kubernetes:
+and a [Rancher2 provider](https://registry.terraform.io/providers/rancher/rancher2/latest/docs) for Kubernetes:
 
 ```
 provider "rancher2" {
@@ -112,35 +112,6 @@ resource "google_compute_instance" "vm_gcp" {
 }
 ```
 
-### Data
-
-We need to pass the Rancher registration command into the startup script above, so we need a data template that allows us to substitute Terraform variables in local files:
-
-```
-data "template_file" "startup-script_data" {
-  template = file("${path.module}/files/startup-script")
-  vars = {
-    registration_command = "${rancher2_cluster.cluster_gcp.cluster_registration_token.0.node_command} --etcd --controlplane --worker"
-  }
-  depends_on = [rancher2_cluster.cluster_gcp]
-}
-```
-
-The registration command will only be available after successfully creating the cluster in Rancher, hence the dependency.
-
-### Variables
-
-Specific values, such as the Kubernetes version to use or the number of nodes, are defined as variables to make overall code maintenance easier:
-
-```
-variable "k8version" {
-  default = "v1.18.14-rancher1-1"
-}
-variable "numnodes" {
-    default = 3
-}
-```
-
 ### Cluster sync
 
 We're almost ready; just let's wait for the cluster to become active, using a timer:
@@ -183,7 +154,36 @@ resource "rancher2_app_v2" "syslog_gcp" {
 
 For the new v2 app resources, it can be beneficial to add a dependency to the control plane to ensure that the cluster is still accessible while the app resources are being destroyed.
 
-### Output
+## Variables
+
+Specific values, such as the Kubernetes version to use or the number of nodes, are defined as variables to make overall code maintenance easier:
+
+```
+variable "k8version" {
+  default = "v1.18.14-rancher1-1"
+}
+variable "numnodes" {
+    default = 3
+}
+```
+
+## Data
+
+We need to pass the Rancher registration command into the startup script above, so we need a data template that allows us to substitute Terraform variables in local files:
+
+```
+data "template_file" "startup-script_data" {
+  template = file("${path.module}/files/startup-script")
+  vars = {
+    registration_command = "${rancher2_cluster.cluster_gcp.cluster_registration_token.0.node_command} --etcd --controlplane --worker"
+  }
+  depends_on = [rancher2_cluster.cluster_gcp]
+}
+```
+
+The registration command will only be available after successfully creating the cluster in Rancher, hence the dependency.
+
+## Output
 
 Last but not least, to facilitate command-line ssh access, we show the external IP addresses upon successful completion:
 
@@ -204,13 +204,13 @@ rke-1dec3f-1   Ready    controlplane,etcd,worker   45m   v1.18.14
 rke-1dec3f-2   Ready    controlplane,etcd,worker   45m   v1.18.14
 ```
 
-## Validation
+### Validation
 
 To validate a successful build, I usually enable Rancher's monitoring app and deploy the "Hello World" of Kubernetes, a WordPress instance, from the Rancher catalog.
 
 Never run a Kubernetes cluster without monitoring or logging!
 
-## Troubleshooting
+### Troubleshooting
 
 The best place for troubleshooting during plan execution is the pod running Rancher's output - it provides detailed information on what Rancher is currently doing and complete error messages if something goes wrong.
 

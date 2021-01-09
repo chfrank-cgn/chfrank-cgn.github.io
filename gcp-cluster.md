@@ -171,6 +171,7 @@ variable "numnodes" {
 
 To prepare the instances, we will need to enable docker:
 
+```
 #!/bin/sh
 apt-get update
 apt-get install -y apt-transport-https jq software-properties-common
@@ -181,6 +182,7 @@ apt-get -y install docker-ce=18.06.3~ce~3-0~ubuntu
 usermod -G docker -a rancher
 ${registration_command}
 exit 0
+```
 
 ## Data
 

@@ -167,6 +167,21 @@ variable "numnodes" {
 }
 ```
 
+## Startup script
+
+To prepare the instances, we will need to enable docker:
+
+#!/bin/sh
+apt-get update
+apt-get install -y apt-transport-https jq software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+apt-get update
+apt-get -y install docker-ce=18.06.3~ce~3-0~ubuntu
+usermod -G docker -a rancher
+${registration_command}
+exit 0
+
 ## Data
 
 We need to pass the Rancher registration command into the startup script above, so we need a data template that allows us to substitute Terraform variables in local files:

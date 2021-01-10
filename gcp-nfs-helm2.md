@@ -2,7 +2,7 @@
 
 In this article, we're looking at setting up the NFS Client Provisioner on a Kubernetes cluster using Helm v2. 
 
-Helm v2 is now [deprecated](https://helm.sh/blog/helm-v2-deprecation-timeline/), and this article is only here for historical reasons.
+Helm v2 is now [deprecated](https://helm.sh/blog/helm-v2-deprecation-timeline/), and this article remains here solely for historical reasons.
 
 Although Kubernetes mainly targets cloud-native stateless applications, there might be a need for persistent storage for particular applications. Suppose you're looking for shared volumes, in Kubernetes parlance with "RWX" or "ReadWriteMany" access. In that case, NFS is an excellent choice - the protocol is robust, and there are many rock-solid implementations around. Furthermore, there are well established provider-side backup and recovery solutions available; some cloud-native storage providers only allow for application-side backup and recovery, which does not have me fully convinced.
 

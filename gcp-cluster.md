@@ -19,9 +19,9 @@ drwxr-xr-x 2 cfrank ewscom 4096 Dec  9 09:03 files
 -rw-r--r-- 1 cfrank ewscom   45 Jan  9 08:32 versions.tf
 ```
 
-The file naming follows the convention proposed by HashiCorp, but you're free to use your naming scheme, all files with a  .tf ending will be examined. As we go along, we'll look at all the individual files - this Terraform plan has successfully been executed multiple times, and you can find the complete source code on [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/gcp-cluster).
+The file naming follows the convention proposed by HashiCorp, but you're free to use your naming scheme, all plan files with a  .tf ending will be examined. As we go along, we'll look at all the individual files - this Terraform plan has been applied successfully multiple times, and you can find the complete source code on my [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/gcp-cluster).
 
-Terraform is a state-based infrastructure orchestration tool; for storage of the actual plan state, we'll use the [Terraform cloud](https://www.terraform.io/cloud):
+Terraform is a declarative, state-based infrastructure orchestration tool; for storage of the actual plan state, we'll use the [Terraform cloud](https://www.terraform.io/cloud):
 
 ```
 terraform {
@@ -34,7 +34,7 @@ terraform {
 }
 ```
 
-The Terraform cloud allows remote storage of plan states and offers integration into the main source code revision tools, allowing you to trigger plan execution with a simple commit
+The Terraform cloud allows remote storage of plan states and offers integration into the main source code revision tools, allowing you to trigger plan execution with a simple commit.
 
 ## Provider
 
@@ -58,6 +58,8 @@ provider "rancher2" {
   insecure = true
 }
 ```
+
+For GCP, we'll need a service account; for Rancher, we'll need an API token.
 
 ## Main
 
@@ -156,7 +158,7 @@ For the new v2 app resources, it can be beneficial to add a dependency to the co
 
 ## Variables
 
-Specific values, such as the Kubernetes version to use or the number of nodes, are defined as variables to make overall code maintenance easier:
+Specific values, such as the Kubernetes version to use or the number of nodes, are defined as variables in a separate file to make overall code maintenance easier:
 
 ```
 variable "k8version" {
@@ -169,17 +171,19 @@ variable "numnodes" {
 
 ## Startup script
 
-To prepare the instances, we will need to enable docker:
+To prepare the instances, we will need to enable docker during startup, and we might want to add NFS:
 
 ```
 #!/bin/sh
 apt-get update
-apt-get install -y apt-transport-https jq software-properties-common
+apt-get install -y apt-transport-https jq software-properties-common nfs-common 
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 apt-get update
 apt-get -y install docker-ce=18.06.3~ce~3-0~ubuntu
 usermod -G docker -a rancher
+systemctl start rpc-statd.service
+systemctl enable rpc-statd.service
 ${registration_command}
 exit 0
 ```
@@ -233,4 +237,4 @@ The best place for troubleshooting during plan execution is the pod running Ranc
 
 Happy Ranching!
 
-*(Last update: 1/9/21, cf)*
+*(Last update: 1/10/21, cf)*

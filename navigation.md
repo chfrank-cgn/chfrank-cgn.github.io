@@ -8,6 +8,7 @@
   * [GCP NFS Storage Class](gcp-nfs-helm2.md)
   * [OpenStack Cluster](lc-cluster.md)
   * [oVirt Cluster](ovirt-cluster.md)
+  * [VMware Cluster](vm-cluster.md)
 
 [Manual]()
 

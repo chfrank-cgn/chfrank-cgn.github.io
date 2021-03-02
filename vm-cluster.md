@@ -221,7 +221,7 @@ To validate a successful build, I usually enable Rancher's monitoring app and de
 
 ## Storage Class
 
-To use vSpehere storage, we'll need to define a storage class:
+To use vSphere storage, we'll need to define a storage class:
 
 ```
 apiVersion: storage.k8s.io/v1

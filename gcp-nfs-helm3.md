@@ -22,7 +22,7 @@ The providers will use a kube_config file for access.
 
 ## Helm
 
-Once we've created the service account, Helm can install the NFS client provisioner:
+Once we've defined the provider, Helm can install the NFS client provisioner:
 
 ```
 resource "helm_release" "nfs_client" {
@@ -53,8 +53,8 @@ On the NFS server, the volumes will then look like this:
 ```
 (21879)nfs-server:/mnt/some/path$ll
 total 8
-drwxrwxrwx 3 nfs nfs 4096 Mar 14 10:08 wordpress-data-wordpress-mariadb-0-pvc-f5d9b971-5db3-4a19-8886-ccd6fd47236d
-drwxrwxrwx 3 nfs nfs 4096 Mar 14 10:08 wordpress-wordpress-pvc-36b5c1ac-544e-410a-b71f-d8ecfeea0b48
+drwxrwxrwx 3 nfs nfs ... wordpress-data-wordpress-mariadb-0-pvc-f5d9b971-5db3-4a19-8886-ccd6fd47236d
+drwxrwxrwx 3 nfs nfs ... wordpress-wordpress-pvc-36b5c1ac-544e-410a-b71f-d8ecfeea0b48
 ```
 
 Happy NFSing!

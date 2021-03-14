@@ -5,7 +5,7 @@
   * [Azure Cluster](az-cluster.md)
   * [EC2 Cluster](ec2-cluster.md)
   * [GCP Cluster](gcp-cluster.md)
-  * [GCP NFS Storage Class](gcp-nfs-helm2.md)
+  * [GCP NFS Storage Class](gcp-nfs-helm3.md)
   * [OpenStack Cluster](lc-cluster.md)
   * [oVirt Cluster](ovirt-cluster.md)
   * [VMware Cluster](vm-cluster.md)

@@ -2,7 +2,7 @@
 
 With Rancher 2.5 comes the new v2 [rancher monitoring operator](https://rancher.com/docs/rancher/v2.x/en/monitoring-alerting/v2.5/); the app is based on the upstream [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) Helm chart.
 
-With the new app, it has become straightforward to configure Prometheus for a federated setup. In this example, we'll look at how to send the cluster metrics to a central Prometheus instance, the [Grafana Cloud](https://grafana.com/products/cloud/). Other options could be to send metrics to [Thanos](https://thanos.io/) or Cortex(https://cortexmetrics.io/) similarly.
+With the new app, it has become straightforward to configure Prometheus for a federated setup. In this example, we'll look at how to send the cluster metrics to a central Prometheus instance, the [Grafana Cloud](https://grafana.com/products/cloud/). Other options could be to send metrics to [Thanos](https://thanos.io/) or [Cortex](https://cortexmetrics.io/) similarly.
 
 We'll use Terraform to install and configure monitoring because it's easier to document, but you could do it in the new UI as well.
 

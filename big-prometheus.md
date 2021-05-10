@@ -11,7 +11,7 @@ We'll use Terraform to install and configure monitoring because it's easier to d
 In our plan file, we define monitoring as a new v2 app resource:
 
 ```
-
+# Cluster monitoring
 resource "rancher2_app_v2" "monitor_ec2" {
   cluster_id = rancher2_cluster.cluster_ec2.id
   name = "rancher-monitoring"
@@ -76,4 +76,4 @@ Depending on your configuration, you might need to include dependency or lifecyc
 
 Happy Ranching!
 
-*(Last update: 5/8/21, cf)*
+*(Last update: 5/10/21, cf)*

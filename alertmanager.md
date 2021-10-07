@@ -1,6 +1,6 @@
 # Alertmanager
 
-Beginning with Rancher 2.5, there is the new [Rancher Monitoring Application](https://rancher.com/docs/rancher/v2.x/en/monitoring-alerting/v2.5/); this v2 app is based on the upstream [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) Helm chart and includes Alertmanager.
+Beginning with Rancher 2.5, there is the new [Rancher Monitoring Application](https://rancher.com/docs/rancher/v2.6/en/monitoring-alerting/); this v2 app is based on the upstream [kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack) Helm chart and includes Alertmanager.
 
 Configuration of Alertmanager is covered in detail in the [Prometheus documentation](https://prometheus.io/docs/alerting/latest/configuration/); we'll not cover the actual configuration items here, but look at two of the available options to configure it in Rancher instead.
 

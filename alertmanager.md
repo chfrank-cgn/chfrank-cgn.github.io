@@ -96,6 +96,6 @@ Apply the CRD with kubectl, and the operator will perform the changes; to check 
 
 A big shoutout to [Martin Weiss](https://linkedin.com/in/martin-weiss-8413906a) of [SUSE](https://www.suse.com/) for their help with this!
 
-Happy Alerting!
+Happy Ranching!
 
 *(Last update: 10/7/21, cf)*

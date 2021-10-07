@@ -94,7 +94,7 @@ spec:
 ```
 Apply the CRD with kubectl, and the operator will perform the changes; to check whether the configuration was successful, you can navigate to Alertmanager in the Rancher GUI in check the Status tab.
 
-A big shoutout to [Martin Weiss](linkedin.com/in/martin-weiss-8413906a) of [SUSE](https://www.suse.com/) for their help with this!
+A big shoutout to [Martin Weiss](https://linkedin.com/in/martin-weiss-8413906a) of [SUSE](https://www.suse.com/) for their help with this!
 
 Happy Alerting!
 

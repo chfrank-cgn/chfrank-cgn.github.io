@@ -10,6 +10,7 @@
   * [GCP NFS Storage Class](gcp-nfs-helm3.md)
   * [OpenStack Cluster](lc-cluster.md)
   * [oVirt Cluster](ovirt-cluster.md)
+  * [Role Bindings](role-bindings.md)
   * [VMware Cluster](vm-cluster.md)
 
 [Manual]()

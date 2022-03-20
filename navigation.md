@@ -15,6 +15,7 @@
 
 [Manual]()
 
+  * [Metricbeat](metricbeat.md)
   * [OpenStack](openstack.md)
   * [oVirt](ovirt-cp.md)
 

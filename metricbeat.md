@@ -88,6 +88,11 @@ Once Filebeat is configured, you can start it and begin configuring your Kibana 
 kubectl create -f filebeat-kubernetes.yaml
 ```
 
+## Tolerations
+
+Both Metricbeat and Filebeat will deploy as DaemonSet on all worker nodes. If you have a separate control plane, you might want to adjust the tolerations in the deployment files.
+
+
 Happy Measuring!
 
-*(Last update: 3/20/22, cf)*
+*(Last update: 3/21/22, cf)*

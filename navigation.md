@@ -18,6 +18,7 @@
   * [Metricbeat](metricbeat.md)
   * [OpenStack](openstack.md)
   * [oVirt](ovirt-cp.md)
+  * [Single-Node Rancher](single-node.md)
 
 [Network]()
 

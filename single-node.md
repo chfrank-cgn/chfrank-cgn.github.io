@@ -16,7 +16,7 @@ We create an RKE [config file](https://rancher.com/docs/rke/latest/en/installati
 
 ## Leave No Trace
 
-We want to ensure that each start of RKE and Rancher is entirely fresh and new, so we want to make all data ephemeral - quite the opposite of typical a Rancher (HA) installation.
+We want to ensure that each start of RKE and Rancher is entirely fresh and new, so we want to make all data ephemeral - quite the opposite of a typical Rancher (HA) installation.
 
 To do this, we create temporary file systems for Docker, containerd, and Rancher:
 

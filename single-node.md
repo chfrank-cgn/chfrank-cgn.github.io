@@ -40,7 +40,7 @@ After a reboot, there will be no data from a previous run.
 
 To start Rancher, we follow the steps for a [Rancher installation](https://rancher.com/docs/rancher/v2.6/en/installation/install-rancher-on-k8s/):
 
-In the directory with the RKE configuration, e.g., rancher, we execute:
+In the directory with the RKE configuration, e.g., ~/rancher, we execute:
 
 ```
 cd rancher

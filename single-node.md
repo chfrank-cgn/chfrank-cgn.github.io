@@ -12,7 +12,7 @@ To prepare, we create a modest VM with a current flavor of Linux on a (cloud) pr
 
 We copy [RKE](https://github.com/rancher/rke/releases) and [Helm](https://github.com/helm/helm/releases) binaries to a directory of our choice, e.g., to /usr/local/bin/.
 
-We create an RKE [config file](https://rancher.com/docs/rke/latest/en/installation/) suitable for the chosen VM as the final preparation step.
+We create an RKE [config file](https://rancher.com/docs/rke/latest/en/installation/) suitable for the chosen VM as the final preparation step, e.g., in ~/rancher.
 
 ## Leave No Trace
 
@@ -21,9 +21,9 @@ We want to ensure that each start of RKE and Rancher is entirely fresh and new, 
 To do this, we create temporary file systems for Docker, containerd, and Rancher:
 
 ```
-tmpfs	/var/lib/docker	    tmpfs	defaults	1	2
-tmpfs	/var/lib/rancher	  tmpfs	defaults	1	2
-tmpfs	/var/lib/containerd	tmpfs	defaults	1	2
+tmpfs	/var/lib/docker     tmpfs	defaults	1	2
+tmpfs	/var/lib/rancher    tmpfs	defaults	1	2
+tmpfs	/var/lib/containerd tmpfs	defaults	1	2
 ```
 
 and make sure that we have etcd-Snapshotting disabled in the cluster configuration:
@@ -68,8 +68,10 @@ Next, we install cert-manager and wait for it to finish:
 ```
 kubectl --kubeconfig=rancher/kube_config_cluster.yml apply -f \
   https://github.com/jetstack/cert-manager/releases/download/v1.5.1/cert-manager.crds.yaml
+
 helm --kubeconfig=rancher/kube_config_cluster.yml install cert-manager \
   jetstack/cert-manager --namespace cert-manager --version v1.5.1
+
 kubectl --kubeconfig=rancher/kube_config_cluster.yml -n cert-manager \
   rollout status deploy/cert-manager
 ```
@@ -83,6 +85,7 @@ helm --kubeconfig=rancher/kube_config_cluster.yml \
     --set hostname=rancher.host.name \
     --set bootstrapPassword="SuperSecret" \
     --set replicas=1 
+
 kubectl --kubeconfig=rancher/kube_config_cluster.yml -n cattle-system \
   rollout status deploy/rancher
 ```

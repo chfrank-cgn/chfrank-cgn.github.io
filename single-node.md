@@ -23,15 +23,21 @@ To do this, we create temporary file systems for Docker, containerd, and Rancher
 ```
 tmpfs	/var/lib/docker     tmpfs	defaults	1	2
 tmpfs	/var/lib/rancher    tmpfs	defaults	1	2
+tmpfs	/var/lib/kubelet    tmpfs	defaults	1	2
 tmpfs	/var/lib/containerd tmpfs	defaults	1	2
+tmpfs	/var/log/containers tmpfs	defaults	1	2
+tmpfs	/var/lib/etcd	    tmpfs	defaults	1	2
 ```
 
-and make sure that we have etcd-Snapshotting disabled in the cluster configuration:
+and make sure that we have etcd-Snapshotting and audit log disabled in the cluster configuration:
 
 ```
 services:
   etcd:
     snapshot: false
+  kube-api:
+    audit_log:
+      enabled: false
 ```
 
 After a reboot, there will be no data from a previous run.

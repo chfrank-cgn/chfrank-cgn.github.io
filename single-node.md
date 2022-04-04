@@ -100,7 +100,7 @@ We'll give Rancher some time to settle after the deployment finishes and then lo
 
 ## Stop Rancher
 
-Once we're finished with our Rancher instance, we can shut Kubernetes down:
+Once we're finished with our Rancher instance, we can shut down Kubernetes:
 
 ```
 cd rancher

@@ -4,7 +4,7 @@ SUSE Rancher offers a convenient docker image for a quick and well-documented [s
 
 However, there are situations where you might need a bit more control over the setup without sacrificing the speed and ease of installation. The following design was inspired by the blog post ["Powerful Single Node RKE2 on Hetzner"](https://blog.alphabravo.io/posts/2021/single-node-rke2-pt1/) by the [AB Engineering Team](mailto:devops@alphabravo.io) and will use RKE as the Kubernetes distribution to install Rancher.
 
-Our goal is to create a repeatable process creating a fresh Rancher instance every time.
+Our goal is to create a repeatable process creating a fresh Rancher instance on every reboot.
 
 ## Preparations
 

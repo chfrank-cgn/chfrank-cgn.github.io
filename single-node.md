@@ -26,7 +26,7 @@ tmpfs	/var/lib/rancher    tmpfs	defaults	1	2
 tmpfs	/var/lib/kubelet    tmpfs	defaults	1	2
 tmpfs	/var/lib/containerd tmpfs	defaults	1	2
 tmpfs	/var/log/containers tmpfs	defaults	1	2
-tmpfs	/var/lib/etcd	    tmpfs	defaults	1	2
+tmpfs	/var/lib/etcd       tmpfs	defaults	1	2
 ```
 
 and make sure that we have etcd-Snapshotting and audit log disabled in the cluster configuration:

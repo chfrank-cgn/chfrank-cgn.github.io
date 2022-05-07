@@ -121,11 +121,23 @@ Now we're ready for the actual import. The GUI would present us with a Kubernete
 
 To make the manifest universal, we substitute the data with the variables that we retrieved from Rancher earlier. You can find a converted manifest in main.tf in the sample plan files for this import on my [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/aks-import-2).
 
+### Lifecycle protection
+
+The cattle-cluster-agent will modify some of the resources during its startup, so we need to protect all the converted Kubernetes resources in the manifest from Terraform lifecycle change:
+
+```
+  lifecycle {
+    ignore_changes = all
+  }
+```
+
 After terraform plan/apply, the cluster will be registered within Rancher.
 
-## Troubleshooting & Caveats
+### Destruction
 
-The registration process is not necessarily reversible; currently, there are several [issues](https://github.com/rancher/rancher/issues/36450) regarding cleanup and the deletion of namespaces.
+Currently, destroying the imported cluster from Terraform will fail due to a finalizer in the cattle-system namespace. Removing this finalizer through the Azure console will allow Terraform to finish; see [36450](https://github.com/rancher/rancher/issues/36450).
+
+## Troubleshooting
 
 The best place for troubleshooting during plan execution is the output of the pod running Rancher - it provides detailed information on what Rancher is currently doing and complete error messages if something goes wrong.
 

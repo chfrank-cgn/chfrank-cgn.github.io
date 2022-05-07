@@ -123,7 +123,7 @@ To make the manifest universal, we substitute the data with the variables that w
 
 ### Lifecycle protection
 
-The cattle-cluster-agent will modify some of the resources during its startup, so we need to protect all the converted Kubernetes resources in the manifest from Terraform lifecycle change:
+The cattle-cluster-agent will modify some of the resources during its startup, so we need to protect all the converted Kubernetes resources in the manifest from Terraform lifecycle changes:
 
 ```
   lifecycle {

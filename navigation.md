@@ -3,7 +3,7 @@
 [Terraform]()
 
   * [Alertmanager](alertmanager.md)
-  * [Azure Cluster](az-cluster.md)
+  * [AKS Cluster](aks-cluster.md)
   * [Big Prometheus](big-prometheus.md)
   * [Cluster Registration](cluster-registration.md)
   * [EC2 Cluster](ec2-cluster.md)

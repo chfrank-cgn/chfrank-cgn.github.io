@@ -2,7 +2,7 @@
 
 Even though [Rancher](https://rancher.com/) offers a cluster driver for [Azure AKS](https://azure.microsoft.com/en-us/services/kubernetes-service/), it can sometimes be helpful to create and import an AKS cluster, as it provides complete flexibility when defining the cluster.
 
-In this article, we'll use [Terraform](https://www.terraform.io/) to create and import an AKS cluster into Rancher. For more details on Rancher's options for cluster registration, look at the Rancher [documentation](https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/registered-clusters/).
+In this article, we'll use [Terraform](https://www.terraform.io/) to create and import an AKS cluster into Rancher using the generic cluster option. This method will leave all Kubernetes lifecycle actions with Terraform and Azure; for more details on Rancher's option for cluster registration, check the Rancher documentation [here](https://rancher.com/docs/rancher/v2.6/en/cluster-provisioning/registered-clusters/).
 
 ## Terraform Provider
 

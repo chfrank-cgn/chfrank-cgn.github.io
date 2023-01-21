@@ -197,6 +197,8 @@ RKE2's built-in ingress controller will listen on the HTTP and HTTPS ports of th
 
 The best place for troubleshooting during plan execution is the output of the pod running Rancher - it provides detailed information on what Rancher is currently doing and complete error messages if something goes wrong.
 
+You can find sample plan files for this RKE2 installation with Rancher on my [GitHub](https://github.com/chfrank-cgn/Rancher/tree/master/az-cluster-1).
+
 Happy Ranching!
 
 *(Last update: 1/21/23, cf)*

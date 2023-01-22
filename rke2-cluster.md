@@ -88,7 +88,7 @@ variable "numcontrol" {
 
 ### Cluster
 
-Now that we have all set up, it's time to define the Kubernetes cluster, using the name from above and set Kubernetes networking and version:
+Now that we have all set up, it’s time to define the Kubernetes cluster using the name from above and set Kubernetes networking and version using the new v2 resource:
 
 ```
 resource "rancher2_cluster_v2" "cluster_az" {
@@ -202,5 +202,5 @@ You can find sample plan files for this RKE2 installation with Rancher on my [Gi
 
 Happy Ranching!
 
-*(Last update: 1/21/23, cf)*
+*(Last update: 1/22/23, cf)*
 

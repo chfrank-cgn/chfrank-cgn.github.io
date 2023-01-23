@@ -21,7 +21,7 @@ The central element of Rancher is the GUI provided by the Rancher server itself.
 Terraform
 ---------
 
-All major cloud providers have their infrastructure scripting tools, but there's a declarative tool available for all infrastructure platforms, in-house or public, Terraform by HashiCorp. With Rancher 2.3, Rancher now has a Terraform provider, and you can perform cluster creation and decommission quickly from a Terraform plan as part of IT's move to Infrastructure-as-Code.
+All major cloud providers have their infrastructure scripting tools, but there's a declarative tool available for all infrastructure platforms, in-house or public, Terraform by HashiCorp. Rancher has a solid Terraform provider, and you can perform cluster creation and decommissioning quickly from a Terraform plan as part of your move to Infrastructure-as-Code.
 
 
 Site Information

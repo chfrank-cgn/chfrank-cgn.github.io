@@ -12,6 +12,7 @@ I'm assuming that you have set up Terraform already. For the actual RKE2 cluster
 resource "rancher2_cluster_v2" "cluster_az" {
   name = "az-${random_id.instance_id.hex}"
   kubernetes_version = var.k8version
+  enable_network_policy = false
   annotations = {
     "field.cattle.io/description" = "Terraform"
   }
@@ -59,6 +60,7 @@ The next step is to pass an argument to the controller not to use Azure networki
 
 ```
 machine_global_config = <<EOF
+  cni: canal
   kube-controller-manager-arg:
     - '--configure-cloud-routes=false'
 EOF

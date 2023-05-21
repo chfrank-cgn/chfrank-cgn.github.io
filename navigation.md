@@ -4,6 +4,7 @@
 
   * [Alertmanager](alertmanager.md)
   * [AKS Cluster](aks-cluster.md)
+  * [Azure Cloud Provider](rke2-azure.md)
   * [Big Prometheus](big-prometheus.md)
   * [Cluster Registration](cluster-registration.md)
   * [EC2 Cluster](ec2-cluster.md)

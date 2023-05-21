@@ -70,7 +70,7 @@ EOF
 
 You can access most Azure cloud functions with the cloud provider, such as creating a Load Balancer service.
 
-You can find the Azure Disk CSI driver [here](https://github.com/kubernetes-sigs/azuredisk-csi-driver#install-driver-on-a-kubernetes-cluster) and the Azure File CSI driver [here](https://github.com/kubernetes-sigs/azurefile-csi-driver#install-driver-on-a-kubernetes-cluster).
+To access block and file storage, you can find the Azure Disk CSI driver [here](https://github.com/kubernetes-sigs/azuredisk-csi-driver#install-driver-on-a-kubernetes-cluster) and the Azure File CSI driver [here](https://github.com/kubernetes-sigs/azurefile-csi-driver#install-driver-on-a-kubernetes-cluster).
 
 Both drivers will be looking for a secret azure-cloud-provider in the kube-system namespace that should contain the base64-encoded cloud provider config from above:
 

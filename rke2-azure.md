@@ -1,6 +1,6 @@
 # Azure Cloud Provider
 
-Since 2.7.X, [Rancher](https://rancher.com/) RKE2 has become the default Kubernetes version for provisioning all major hyper scalers and virtualization platforms.
+Since [Rancher](https://rancher.com/) v2.7.X, RKE2 has become the default Kubernetes version for provisioning on all major hyper scalers and virtualization platforms.
 
 Let's look at enabling a cloud provider using Terraform.
 
